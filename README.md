@@ -1,16 +1,31 @@
-# furniture
+# Augmented Reality Shopping App
 
-A new Flutter project.
+Augmented Reality Shopping App is a innovative and user-friendly shopping app that leverages augmented reality technology to provide customers with a more immersive and engaging shopping experience. The app allows customers to use their smartphone camera to see how products would look in their homes or on their bodies before making a purchase.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Splash screens for introduction about the app.
+- Sign up and login feature.
+- Product catalog to list different products.
+- Complete product details page.
+- Virtual Try-on option with smartphone camera.
+- Add to cart option.
+- Cart page to view added items.
+- Checkout feature to complete the purchasing process.
 
-A few resources to get you started if this is your first Flutter project:
+## Requirements to test our App
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Smartphone with "**Google Play services for AR**"  support.
+- Stable Internet connection.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### How to use the app
+
+1) Install the app on your smartphone.
+2) Open the app and go through the splash screens.
+3) Sign up if you are a new user or login if you already have an account.
+4) Browse the product catalog and select a product.
+5) View complete product details page.
+6) Use virtual try-on option to see how the product looks on you or in your real-life environment.
+7) Add the product to the cart if you like it.
+8) View all the added items in the cart page.
+9) Proceed to checkout and complete the purchasing process by making the payment
