@@ -53,7 +53,7 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
 
 
 - Virtual Try-on option with smartphone camera.
-- 
+
 <img src="https://user-images.githubusercontent.com/110174850/227734234-343e1b26-a89b-471e-87df-8fa16a5eff6d.jpg" width="150" height="280">
 
 
@@ -72,13 +72,13 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
  
  
 - Cart page to view added items.
-- 
-<img src="https://user-images.githubusercontent.com/110174850/227734468-33439398-5263-4ed6-a84f-e4e5db36ae95.jpg">
+
+<img src="https://user-images.githubusercontent.com/110174850/227734468-33439398-5263-4ed6-a84f-e4e5db36ae95.jpg" width="150" height="280">
 
 
 - Checkout and Payment feature to complete the purchasing process.
-- 
-<img src="https://user-images.githubusercontent.com/110174850/227734513-0552ed6a-096d-4048-983e-602b52ee53c8.jpg">
+
+<img src="https://user-images.githubusercontent.com/110174850/227734513-0552ed6a-096d-4048-983e-602b52ee53c8.jpg" width="150" height="280">
 
 
 ## Requirements to test our App
