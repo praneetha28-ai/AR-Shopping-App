@@ -8,9 +8,9 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
 
 <table>
   <tr>
-    <td>First Screen Page</td>
-     <td>Holiday Mention</td>
-     <td>Present day in purple and selected day in pink</td>
+    <td>Splash Screen 1</td>
+     <td>Splash Screen 2</td>
+     <td>Splash Screen 3</td>
   </tr>
   <tr>
     <td valign="top"><img src="https://user-images.githubusercontent.com/110174850/227733503-a6057519-6bea-490b-9a6e-8c59b783ce8c.jpg" width="150" height="280"></td>
