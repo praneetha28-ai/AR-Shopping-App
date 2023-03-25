@@ -57,6 +57,7 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
 
 
 - Add to cart option.
+
  <table>
   <tr>
     <td>Add Product to Cart 1</td>
