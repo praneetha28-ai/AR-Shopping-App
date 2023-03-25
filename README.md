@@ -40,9 +40,39 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
  </table>
 
 
-- Complete product details page.
+- Detailed Description of a particular product page.
+
+<table>
+  <tr>
+    <td>Sample Product Details 1</td>
+     <td>Sample Product Details 2</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="https://user-images.githubusercontent.com/110174850/227734129-aea22cd9-4824-480b-9c5b-b8097858c215.jpg" width="150" height="280"></td>
+    <td valign="top"><img src="https://user-images.githubusercontent.com/110174850/227734136-d95faaf8-be3c-4f6c-90dc-7e5fd3b94425.jpg" width="150" height="280"></td>
+  </tr>
+ </table>
+
+
 - Virtual Try-on option with smartphone camera.
+<img src="https://user-images.githubusercontent.com/110174850/227734234-343e1b26-a89b-471e-87df-8fa16a5eff6d.jpg" width="150" height="280">
+
+
 - Add to cart option.
+- ![addingCart](https://user-images.githubusercontent.com/110174850/227734334-1d60603d-f132-4354-b2c7-7c8c94197a39.jpg)
+- ![addingCart2](https://user-images.githubusercontent.com/110174850/227734339-6196f644-c66a-46de-bd42-3a8559a14680.jpg)
+
+
+-<table>
+  <tr>
+    <td>Add Product to Cart 1</td>
+     <td>Add Product to Cart 2</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="https://user-images.githubusercontent.com/110174850/227734334-1d60603d-f132-4354-b2c7-7c8c94197a39.jpg" width="150" height="280"></td>
+    <td valign="top"><img src="https://user-images.githubusercontent.com/110174850/227734339-6196f644-c66a-46de-bd42-3a8559a14680.jpg" width="150" height="280"></td>
+  </tr>
+ </table>
 - Cart page to view added items.
 - Checkout feature to complete the purchasing process.
 
