@@ -6,6 +6,9 @@ Augmented Reality Shopping App is a innovative and user-friendly shopping app th
 
 - Splash screens for introduction about the app.
 <img src="https://user-images.githubusercontent.com/110174850/227733503-a6057519-6bea-490b-9a6e-8c59b783ce8c.jpg" width="150" height="280">
+<img src="https://user-images.githubusercontent.com/110174850/227733620-057eae40-95dc-45f8-a28b-32a75ace32fa.jpg" width="150" height="280">
+<img src="https://user-images.githubusercontent.com/110174850/227733627-8a6d5320-03c2-4a5d-b898-1f150521abde.jpg" width="150" height="280">
+
 
 - Sign up and login feature.
 - Product catalog to list different products.
