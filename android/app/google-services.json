@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "717741063415",
+    "project_id": "arshopping-28b9c",
+    "storage_bucket": "arshopping-28b9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717741063415:android:c257a685d0f8cfa65aa7f2",
+        "android_client_info": {
+          "package_name": "com.example.furniture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717741063415-95s17v0rcfhpqbgm1npajbo8rkhrp7og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.furniture",
+            "certificate_hash": "d7bd907fff02b19f5cdd9349b28fb1914874769a"
+          }
+        },
+        {
+          "client_id": "717741063415-orrfmd4193iobji9j7gm2gu8bt62mvsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqbSXtj2Ti06ZTMpb38JRUMoHPvpQU7kI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717741063415-orrfmd4193iobji9j7gm2gu8bt62mvsi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
