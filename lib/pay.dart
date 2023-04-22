@@ -7,8 +7,10 @@ class Payment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffDDF7E3),
       appBar: AppBar(title: Text("Payment Gateway"),backgroundColor: Colors.red,),
       body: Container(
+        margin: EdgeInsets.all(8),
         child: Column(
           children: [
             InkWell(

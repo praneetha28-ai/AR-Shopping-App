@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,21 +8,43 @@ import 'package:furniture/product.dart';
 import 'package:furniture/signupPage.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:flutter/src/material/icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyliquidSwipe extends StatelessWidget {
+import 'categories.dart';
+
+class MyliquidSwipe extends StatefulWidget {
+
+  @override
+  State<MyliquidSwipe> createState() => _MyliquidSwipeState();
+}
+
+class _MyliquidSwipeState extends State<MyliquidSwipe> {
+  late bool isLogged;
+  late String name;
+  late String email;
+  @override
+  void initState(){
+    super.initState();
+    prefer();
+  }
+  void prefer() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    isLogged = preferences.getBool("logged")??false;
+    name = preferences.getString("username")!;
+    email = preferences.getString("email")!;
+  }
+
+  late User user;
   @override
   Widget build(BuildContext context) {
     final page = [
       Container(
         color: Colors.red,
           height: MediaQuery.of(context).size.height,
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-
               Image.asset("assets/items/augmented-reality.png",),
               SizedBox(height: 50,),
               Container(
@@ -81,7 +104,7 @@ class MyliquidSwipe extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.all(10),
                       child: Text(
-                        "Experience the Augmented Reality by selecting  the product and clicking on the camera option in the app bar.Rotate your mobile to locate the object.",
+                        "Experience the Augmented Reality by selecting the product and clicking on try with the camera button.Rotate your mobile to locate the object.",
                         style: TextStyle(
                             fontSize: 30,
                             color: Colors.black,
@@ -100,10 +123,9 @@ class MyliquidSwipe extends StatelessWidget {
               slideIconWidget: Icon(Icons.arrow_back_ios),
             ),
            floatingActionButton: FloatingActionButton(
-
              backgroundColor: Colors.blue[100],
              onPressed: (){
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>isLogged?CategoryScreen(useraname: name,email: email,):Login()));
              },
              child: Icon(Icons.skip_next,color: Colors.black,),
            ),

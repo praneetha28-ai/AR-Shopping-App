@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:furniture/loginPage.dart';
 import 'package:furniture/product.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/userModel.dart';
 
@@ -34,7 +36,7 @@ class _SignState extends State<Signup>{
   Widget build(BuildContext context) {
     //first name field
     final firstNameField = TextFormField(
-
+        cursorColor:Colors.red,
         autofocus: false,
         controller: firstNameEditingController,
         keyboardType: TextInputType.name,
@@ -64,6 +66,7 @@ class _SignState extends State<Signup>{
 
     //second name field
     final secondNameField = TextFormField(
+        cursorColor:Colors.red,
         autofocus: false,
         controller: secondNameEditingController,
         keyboardType: TextInputType.name,
@@ -89,6 +92,7 @@ class _SignState extends State<Signup>{
 
     //email field
     final emailField = TextFormField(
+        cursorColor:Colors.red,
         autofocus: false,
         controller: emailEditingController,
         keyboardType: TextInputType.emailAddress,
@@ -119,6 +123,7 @@ class _SignState extends State<Signup>{
 
     //password field
     final passwordField = TextFormField(
+        cursorColor:Colors.red,
         autofocus: false,
         controller: passwordEditingController,
         obscureText: true,
@@ -147,6 +152,7 @@ class _SignState extends State<Signup>{
 
     //confirm password field
     final confirmPasswordField = TextFormField(
+        cursorColor:Colors.red,
         autofocus: false,
         controller: confirmPasswordEditingController,
         obscureText: true,
@@ -193,7 +199,7 @@ class _SignState extends State<Signup>{
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xffDDF7E3),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -208,7 +214,7 @@ class _SignState extends State<Signup>{
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.white,
+            color: Color(0xffDDF7E3),
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
@@ -300,7 +306,9 @@ class _SignState extends State<Signup>{
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.secondName = secondNameEditingController.text;
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("logged", true);
+    prefs.setString("username", firstNameEditingController.text);
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
@@ -309,7 +317,7 @@ class _SignState extends State<Signup>{
     await FirebaseFirestore.instance.collection(email);
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => CatalogScreen(user: email,)),
+        MaterialPageRoute(builder: (context) => Login()),
             (route) => false);
   }
 }

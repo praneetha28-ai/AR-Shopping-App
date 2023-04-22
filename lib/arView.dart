@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
@@ -13,10 +14,12 @@ class ARViewScreen extends StatefulWidget {
 
 
   @override
-  _ARViewScreenState createState() => _ARViewScreenState();
+  _ARViewScreenState createState() => _ARViewScreenState(item: itemImg);
 }
 
 class _ARViewScreenState extends State<ARViewScreen> {
+  late String item;
+  _ARViewScreenState({required this.item});
   late ArCoreController arCoreController;
   GlobalKey previewContainer = new GlobalKey();
   void whenARCoreViewCreated( ArCoreController controller){
@@ -29,8 +32,9 @@ class _ARViewScreenState extends State<ARViewScreen> {
     print(hit.distance);
     addItemImagetoScene(hit);
   }
+
   Future addItemImagetoScene(ArCoreHitTestResult hitTestResult) async{
-    final bytes= (await rootBundle.load(widget.itemImg)).buffer.asUint8List();
+    final bytes= (await rootBundle.load(item)).buffer.asUint8List();
     final imageItem= ArCoreNode(
       image: ArCoreImage(bytes: bytes, width: 600, height: 600),
       position: hitTestResult.pose.translation + vector.Vector3(0.0, 0.0, 0.0),
@@ -39,28 +43,23 @@ class _ARViewScreenState extends State<ARViewScreen> {
     arCoreController.addArCoreNodeWithAnchor(imageItem);
   }
 
-  // takeScreenShot() async{
-  //   RenderObject? boundary = previewContainer.currentContext?.findRenderObject();
-  //   ui.Image image = await boundary?.();
-  //   final directory = (await getApplicationDocumentsDirectory()).path;
-  //   ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  //   Uint8List pngBytes = byteData.buffer.asUint8List();
-  //   print(pngBytes);
-  //   File imgFile =new File('$directory/screenshot.png');
-  //   imgFile.writeAsBytes(pngBytes);
-  // }
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
       key: previewContainer,
       child:  Scaffold(
-
       body:  ArCoreView(
         onArCoreViewCreated: whenARCoreViewCreated,
         enableTapRecognizer: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          setState(() {
+            item="assets/items/dress.png";
+            Fluttertoast.showToast(msg: "Image changed");
+            // whenARCoreViewCreated;
+          });
+        },
         backgroundColor: Colors.red,
         child: Icon(Icons.camera_alt),
       ),

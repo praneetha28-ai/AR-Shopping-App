@@ -1,8 +1,12 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/arView.dart';
+import 'package:furniture/categories.dart';
+import 'package:furniture/product.dart';
 import 'package:furniture/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,22 +15,39 @@ Future<void> main() async {
   print(await ArCoreController.checkArCoreAvailability());
   print('\nAR SERVICES INSTALLED?');
   print(await ArCoreController.checkIsArCoreInstalled());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool loggedIn = prefs.getBool("logged")??false;
+  final String uname=prefs.getString("username")??"";
+  final String email = prefs.getString("email")??"";
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp( MyApp(isLogged: loggedIn,username: uname,email: email,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  late bool isLogged;
+  late String username;
+  late String email;
+  MyApp({super.key,required this.isLogged,required this.username,required this.email});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(username);
+    print(email);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Arena',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  MyliquidSwipe(),
+      home:  isLogged?CategoryScreen(useraname: username, email: email):AnimatedSplashScreen(
+          splash: Image.asset(
+            'assets/images/logo.png',
+            width: 200,
+            height: 200,
+          ),
+          animationDuration: Duration(seconds: 3),
+          splashTransition: SplashTransition.scaleTransition,
+          nextScreen: MyliquidSwipe()),
     );
   }
 }
@@ -40,9 +61,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-
 
   @override
   Widget build(BuildContext context) {

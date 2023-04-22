@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:furniture/pay.dart';
 import 'package:furniture/payments.dart';
 
@@ -5,10 +10,19 @@ import 'arView.dart';
 import 'package:flutter/material.dart';
 
 import 'models/itemModel.dart';
-class itemListScreen extends StatelessWidget {
-  late List<ItemModel> cart;
-  itemListScreen({required this.cart});
+class itemListScreen extends StatefulWidget {
+  // late List<ItemModel> cart;
+  final String email;
+  itemListScreen({required this.email});
 
+  @override
+  State<itemListScreen> createState() => _itemListScreenState(email: email);
+}
+
+class _itemListScreenState extends State<itemListScreen> {
+  // final List<ItemModel> cart;
+  final String email;
+  _itemListScreenState({required this.email});
   List<ItemModel> items= [
     ItemModel(
       'Double Bed',
@@ -115,7 +129,6 @@ class itemListScreen extends StatelessWidget {
     ),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,49 +154,138 @@ class itemListScreen extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.only(left:20,right:20,top:6),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color(0xffFFF4E0),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30)
                       ),
                     ),
-                    child: ListView.separated(
-                      itemBuilder: (BuildContext, int index){
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context, MaterialPageRoute(
-                              builder: (context) => ARViewScreen(
-                                itemImg: cart[index].pic,
-                              ),
-                            ),
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("users").doc(email).collection("products").where("cart",isEqualTo: true).snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasError){
+                          return Container(
+                              padding: EdgeInsets.only(left:20,right:20,top:6),
+                              child: CircularProgressIndicator());
+                        }
+                        else {
+                          if(!snapshot.hasData){
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                                // padding: EdgeInsets.only(left:20,right:20,top:6),
+                                child: CircularProgressIndicator()
                             );
-                          },
-                          child: Row(
-                            children: <Widget> [
-                              SizedBox(
-                                width: 80,
-                                height: 80,
-                                child: Image.asset("${cart[index].pic}", width: 60,),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(cart[index].name, style: TextStyle(fontSize: 16, color: Colors.black),),
-                                    Text(cart[index].detail, style: TextStyle(fontSize: 10, color: Colors.black87),),
-                                  ],
+                          }
+                          return ListView.separated(
+                            itemBuilder: (BuildContext, int index) {
+                              final prod = snapshot.data!.docs[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context, MaterialPageRoute(
+                                    builder: (context) =>
+                                        ARViewScreen(
+                                          itemImg: prod["pic"],
+                                        ),
+                                  ),
+                                  );
+                                },
+                                child: Slidable(
+                                  endActionPane: ActionPane(
+                                    motion: StretchMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        onPressed: (conte) {
+                                          showDialog(context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(10)),
+                                                  backgroundColor: Color(
+                                                      0xffFFF4E0),
+                                                  content: Text(
+                                                      "Remove the item from cart"),
+                                                  actions: [
+                                                    TextButton(onPressed: () {
+                                                      FirebaseFirestore.instance
+                                                          .collection("users")
+                                                          .doc(email)
+                                                          .collection(
+                                                          "products").doc(
+                                                          prod.id)
+                                                          .update({
+                                                        "cart": false
+                                                      });
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                        child: Text(
+                                                          "Yes, Remove",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .red),)),
+                                                    TextButton(onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                        child: Text(
+                                                          "No, Keep it",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .red),)),
+                                                  ],
+                                                );
+                                              }
+                                          );
+                                          // cart.removeAt(index);
+                                        },
+                                        icon: Icons.delete,
+                                        backgroundColor: Colors.red,
+                                        borderRadius: BorderRadius.circular(12),
+                                      )
+                                    ],
+                                  ),
+                                  child: Container(
+                                    color: Color(0xffFFF4E0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: 80,
+                                          height: 80,
+                                          child: Image.asset(
+                                            "${prod["pic"]}", width: 60,),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(prod["name"],
+                                                style: TextStyle(fontSize: 16,
+                                                    color: Colors.black),),
+                                              Text(prod["detail"],
+                                                style: TextStyle(fontSize: 10,
+                                                    color: Colors.black87),),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 60,
+                                          child: Text(prod["price"].toString(),
+                                            style: TextStyle(fontSize: 14,
+                                                color: Colors.red),),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                width: 60,
-                                child: Text(cart[index].price.toString(), style: TextStyle(fontSize: 14, color: Colors.red),),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) => Divider(),
-                      itemCount: cart.length,
+                              );
+                            },
+                            separatorBuilder: (BuildContext context,
+                                int index) => Divider(),
+                            itemCount: snapshot.data!.size,
+                          );
+                        }
+                      }
                     ),
                   ),
                 ),
@@ -193,7 +295,7 @@ class itemListScreen extends StatelessWidget {
                   backgroundColor: Colors.white
                 ),
                   onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>payment()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Payment()));
                   }, child: Text("Proceed to checkout",style: TextStyle(color: Colors.red),))
             ],
           ),
