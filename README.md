@@ -1,6 +1,6 @@
 # Augmented Reality Shopping App
 
-Augmented Reality Shopping App is a innovative and user-friendly shopping app that leverages augmented reality technology to provide customers with a more immersive and engaging shopping experience. The app allows customers to use their smartphone camera to see how products would look in their homes or on their bodies before making a purchase.
+Augmented Reality Shopping App is an innovative and user-friendly shopping app that leverages augmented reality technology to provide customers with a more immersive and engaging shopping experience. The app allows customers to use their smartphone camera to see how products would look in their homes or on their bodies before making a purchase.
 
 ## Features
  
