@@ -193,3 +193,7 @@ Augmented Reality Shopping App is an innovative and user-friendly shopping app t
 6) Add the product to the cart if you like it.
 7) View all the added items in the cart page.
 8) Proceed to checkout and complete the purchasing process by making the payment
+
+### Download the APK
+
+You can Experience the Latest version of our Augmented Reality Shopping App by downloading the APK [here](https://drive.google.com/file/d/1H2ZtYx00sdDAfCPmmFrVA9ZtbU1_iDJi/view?usp=share_link) 
