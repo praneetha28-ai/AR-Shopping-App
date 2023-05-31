@@ -132,7 +132,10 @@ class _itemListScreenState extends State<itemListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,appBar: AppBar(
+      elevation: 0,backgroundColor: Colors.white,
+      leading: IconButton(onPressed: () {Navigator.of(context).pop(context);},
+        icon: Icon(Icons.arrow_back_ios_new,color: Color(0xff394867)),),),
         body:SafeArea(
           child: Column(
             children: <Widget>[
@@ -142,9 +145,8 @@ class _itemListScreenState extends State<itemListScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
                   children: <Widget>[
-                    Text('MY CART  ', style: TextStyle(fontSize: 35, color: Colors.white),),
+                    Text('MY CART  ', style: TextStyle(fontSize: 35, color: Color(0xff394867),),),
                     // Text('Before You BUY', style: TextStyle(fontSize: 35, color: Colors.white ),),
-
                   ],
                 ),
               ),
@@ -154,29 +156,30 @@ class _itemListScreenState extends State<itemListScreen> {
                   child: Container(
                     padding: EdgeInsets.only(left:20,right:20,top:6),
                     decoration: BoxDecoration(
-                      color: Color(0xffFFF4E0),
+                      color: Color(0xff394867),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(30),
                           topLeft: Radius.circular(30)
                       ),
                     ),
                     child: StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection("users").doc(email).collection("products").where("cart",isEqualTo: true).snapshots(),
+                      stream: FirebaseFirestore.instance.collection("users").doc(email).collection("products").doc("categories").collection("cart").snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasError){
                           return Container(
                               padding: EdgeInsets.only(left:20,right:20,top:6),
-                              child: CircularProgressIndicator());
+                              child: Center(child: CircularProgressIndicator()));
                         }
                         else {
                           if(!snapshot.hasData){
                             return Container(
                               width: MediaQuery.of(context).size.width,
                                 // padding: EdgeInsets.only(left:20,right:20,top:6),
-                                child: CircularProgressIndicator()
+                                child: Center(child: CircularProgressIndicator())
                             );
                           }
                           return ListView.separated(
+                            padding: EdgeInsets.all(8),
                             itemBuilder: (BuildContext, int index) {
                               final prod = snapshot.data!.docs[index];
                               return GestureDetector(
@@ -202,29 +205,26 @@ class _itemListScreenState extends State<itemListScreen> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius
                                                           .circular(10)),
-                                                  backgroundColor: Color(
-                                                      0xffFFF4E0),
+                                                  backgroundColor: Color(0xffF1F6F9),
                                                   content: Text(
                                                       "Remove the item from cart"),
                                                   actions: [
-                                                    TextButton(onPressed: () {
+                                                    TextButton(
+                                                        onPressed: () {
                                                       FirebaseFirestore.instance
                                                           .collection("users")
                                                           .doc(email)
                                                           .collection(
-                                                          "products").doc(
-                                                          prod.id)
-                                                          .update({
-                                                        "cart": false
-                                                      });
+                                                          "products").
+                                                      doc("categories").
+                                                      collection("cart").doc(prod.id).delete();
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
                                                         child: Text(
                                                           "Yes, Remove",
                                                           style: TextStyle(
-                                                              color: Colors
-                                                                  .red),)),
+                                                              color: Color(0xff394867)),)),
                                                     TextButton(onPressed: () {
                                                       Navigator.of(context)
                                                           .pop();
@@ -232,8 +232,7 @@ class _itemListScreenState extends State<itemListScreen> {
                                                         child: Text(
                                                           "No, Keep it",
                                                           style: TextStyle(
-                                                              color: Colors
-                                                                  .red),)),
+                                                              color: Color(0xff394867)),)),
                                                   ],
                                                 );
                                               }
@@ -241,13 +240,14 @@ class _itemListScreenState extends State<itemListScreen> {
                                           // cart.removeAt(index);
                                         },
                                         icon: Icons.delete,
-                                        backgroundColor: Colors.red,
+                                        backgroundColor: Color(0xffF1F6F9),
                                         borderRadius: BorderRadius.circular(12),
                                       )
                                     ],
                                   ),
                                   child: Container(
-                                    color: Color(0xffFFF4E0),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Color(0xffF1F6F9),),
+
                                     child: Row(
                                       children: <Widget>[
                                         SizedBox(
@@ -272,7 +272,7 @@ class _itemListScreenState extends State<itemListScreen> {
                                           width: 60,
                                           child: Text(prod["price"].toString(),
                                             style: TextStyle(fontSize: 14,
-                                                color: Colors.red),),
+                                                color: Color(0xff394867)),),
                                         )
                                       ],
                                     ),
@@ -292,11 +292,11 @@ class _itemListScreenState extends State<itemListScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white
+                  backgroundColor:Color(0xff394867)
                 ),
                   onPressed: (){
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Payment()));
-                  }, child: Text("Proceed to checkout",style: TextStyle(color: Colors.red),))
+                  }, child: Text("Proceed to checkout",style: TextStyle(color: Colors.white),))
             ],
           ),
         )

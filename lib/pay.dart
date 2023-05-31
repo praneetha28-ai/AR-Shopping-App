@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture/success.dart';
+import 'package:furniture/thanku_page.dart';
 
 class Payment extends StatelessWidget {
   const Payment({Key? key}) : super(key: key);
@@ -7,15 +8,17 @@ class Payment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffDDF7E3),
-      appBar: AppBar(title: Text("Payment Gateway"),backgroundColor: Colors.red,),
+      backgroundColor: Color(0xffF1F6F9),appBar: AppBar(title: Text('Select Payment Method'),centerTitle: true,backgroundColor: Color(0xff394867),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed:(){Navigator.of(context).pop(context);}),),
       body: Container(
         margin: EdgeInsets.all(8),
         child: Column(
           children: [
             InkWell(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Success()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ThankYouPage(title: 'ThankYou')));
               },
               child: Card(
                 child: Row(
@@ -28,7 +31,7 @@ class Payment extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Success()));},
+              onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ThankYouPage(title: 'ThankYou')));},
               child: Card(
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -40,7 +43,7 @@ class Payment extends StatelessWidget {
             ),
             InkWell(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Success()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ThankYouPage(title: 'ThankYou')));
               },
               child: Card(
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -53,7 +56,7 @@ class Payment extends StatelessWidget {
             ),
             InkWell(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Success()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ThankYouPage(title: 'ThankYou')));
               },
               child: Card(
 

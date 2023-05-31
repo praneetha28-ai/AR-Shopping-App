@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/bottomnav.dart';
 
 import 'package:furniture/loginPage.dart';
 import 'package:furniture/product.dart';
@@ -125,10 +126,11 @@ class _MyliquidSwipeState extends State<MyliquidSwipe> {
            floatingActionButton: FloatingActionButton(
              backgroundColor: Colors.blue[100],
              onPressed: (){
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>isLogged?CategoryScreen(useraname: name,email: email,):Login()));
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>isLogged?MainScreen(username:name, email: email):Login()));
              },
              child: Icon(Icons.skip_next,color: Colors.black,),
            ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       );
   }

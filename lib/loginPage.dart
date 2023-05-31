@@ -8,7 +8,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SignupPage.dart';
+import 'bottomnav.dart';
 import 'categories.dart';
+import 'categoryPage.dart';
 import 'models/itemModel.dart';
 
 
@@ -63,18 +65,19 @@ class _Login extends State<Login>{
     ItemModel("Men's dress", "This is stylish shirt", 'assets/dress/mens8.png', 850),
     ItemModel("Men's dress", "This is stylish shirt", 'assets/dress/mens9.png', 850),
     ItemModel("Men's dress", "This is stylish shirt", 'assets/dress/mens10.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens1.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens2.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens3.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens4.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens5.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens6.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens7.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens8.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens9.png', 850),
-    ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens10.png', 850),
-  ];
 
+  ];
+List<ItemModel> women=[
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens1.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens2.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens3.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens4.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens5.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens6.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens7.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens8.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens9.png', 850),
+  ItemModel("Women's dress", "This is stylish frock", 'assets/dress/womens10.png', 850),];
   List<ItemModel> furniture= [
     ItemModel('Double Bed', 'Double Bed with 2 Lamps', 'assets/items/bed.png', 1200,),
     ItemModel('Single Sofa T55', 'White Sofa For Your Home', 'assets/items/sofa_white.png', 16000,),
@@ -138,24 +141,21 @@ class _Login extends State<Login>{
       // Getting users credential
       UserCredential result = await auth.signInWithCredential(authCredential);
       User user = result.user!;
+      FirebaseFirestore path = FirebaseFirestore.instance;
 
-      if (result != null) {
-        preferences.setString("username", user.displayName!);
-        preferences.setBool("logged", true);
-        preferences.setString("email", user.email!);
-        FirebaseFirestore path = FirebaseFirestore.instance;
-
-
-        classChairs.forEach((element) async {
-          await path.collection("users").doc(user.email).collection(
-              "products").doc("categories").collection("chairs").add({
-            'name': element.name,
-            'detail': element.detail,
-            'pic': element.pic,
-            'price': element.price,
-            'cart': false
-          }).then((value) => print("added"));
-        });
+      Future getDoc() async{
+        var a = await FirebaseFirestore.instance.collection('collection').doc(user.email).get();
+        if(!a.exists){
+          classChairs.forEach((element) async {
+            await path.collection("users").doc(user.email).collection(
+                "products").doc("categories").collection("chairs").add({
+              'name': element.name,
+              'detail': element.detail,
+              'pic': element.pic,
+              'price': element.price,
+              'cart': false
+            }).then((value) => print("added"));
+          });
           furniture.forEach((prod) async {
             await path.collection("users").doc(user.email).collection(
                 "products").doc("categories").collection("furniture").add({
@@ -168,7 +168,7 @@ class _Login extends State<Login>{
           });
           dress.forEach((prod) async {
             await path.collection("users").doc(user.email).collection(
-                "products").doc("categories").collection("dress").add({
+                "products").doc("categories").collection("men").add({
               'name': prod.name,
               'detail': prod.detail,
               'pic': prod.pic,
@@ -176,19 +176,35 @@ class _Login extends State<Login>{
               'cart': false
             }).then((value) => print("added"));
           });
-        electronics.forEach((prod) async {
-          await path.collection("users").doc(user.email).collection(
-              "products").doc("categories").collection("electronics").add({
-            'name': prod.name,
-            'detail': prod.detail,
-            'pic': prod.pic,
-            'price': prod.price,
-            'cart': false
-          }).then((value) => print("added"));
-        });
+          electronics.forEach((prod) async {
+            await path.collection("users").doc(user.email).collection(
+                "products").doc("categories").collection("electronics").add({
+              'name': prod.name,
+              'detail': prod.detail,
+              'pic': prod.pic,
+              'price': prod.price,
+              'cart': false
+            }).then((value) => print("added"));
+          });
+          women.forEach((prod) async {
+            await path.collection("users").doc(user.email).collection(
+                "products").doc("categories").collection("women").add({
+              'name': prod.name,
+              'detail': prod.detail,
+              'pic': prod.pic,
+              'price': prod.price,
+              'cart': false
+            }).then((value) => print("added"));
+          });
+        }
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CategoryScreen(useraname: user.displayName!,email: user.email!,)));
-
+            context, MaterialPageRoute(builder: (context) => MainScreen(username: user.displayName!,email: user.email!,)));
+      }
+      if (result != null) {
+        preferences.setString("username", user.displayName!);
+        preferences.setBool("logged", true);
+        preferences.setString("email", user.email!);
+       getDoc();
       } // if result not null we simply call the MaterialpageRoute,
       // for go to the HomePage screen
     }
@@ -259,7 +275,7 @@ class _Login extends State<Login>{
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.red,
+      color: Color(0xFF32567A),
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
@@ -275,11 +291,11 @@ class _Login extends State<Login>{
     );
 
     return Scaffold(
-      backgroundColor: Color(0xffDDF7E3),
+      backgroundColor: Color(0xffF1F6F9),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Color(0xffDDF7E3),
+            color: Color(0xffF1F6F9),
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
@@ -311,7 +327,7 @@ class _Login extends State<Login>{
                         height: MediaQuery.of(context).size.height/14,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
+                          color: Color(0xFF32567A),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -319,7 +335,9 @@ class _Login extends State<Login>{
                           children: [
                             Image.asset("assets/items/google.png",width: 20,height: 20,),
                             SizedBox(width: 10,),
-                            Text("Continue with Google")
+                            Text("Continue with Google",style: TextStyle(color: Colors.white
+
+                            ),)
                           ],
                         ),
                       ),
@@ -339,7 +357,7 @@ class _Login extends State<Login>{
                             child: Text(
                               "SignUp",
                               style: TextStyle(
-                                  color: Colors.red,
+                                  color: Color(0xFF32567A),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),

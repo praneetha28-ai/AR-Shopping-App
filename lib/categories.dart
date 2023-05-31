@@ -2,10 +2,15 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture/categoryPage.dart';
+import 'package:furniture/itemList.dart';
 import 'package:furniture/product.dart';
+import 'package:furniture/profile.dart';
+import 'package:furniture/settings.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'detail.dart';
 import 'loginPage.dart';
 class CategoryScreen extends StatefulWidget {
 
@@ -23,7 +28,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
   _CategoryScreenState({required this.username,required this.email});
   final PageController bannerController = PageController(initialPage: 0);
   final int bannerCount = 3;
-
+  final List<String> images=[
+    'assets/images/banner1.jfif',
+    'assets/images/banner2.jfif',
+    'assets/images/banner3.jfif',
+  ];
+  int currentPage = 0;
   @override
   void initState() {
     super.initState();
@@ -49,24 +59,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    // print(email);
     return Scaffold(
+      backgroundColor: Color(0xffF1F6F9),
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         elevation: 1,
-        backgroundColor: Colors.white,
-        leading: Icon(Icons.menu_sharp,color: Colors.deepPurple,),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("ARena",style: TextStyle(color: Colors.deepPurple),),
-            SizedBox(width: 100,),
-            Icon(Icons.notifications_active_outlined,color: Colors.deepPurple,),
-            IconButton(
-                onPressed: (){},
-                icon: Icon(Icons.shopping_cart_outlined,color: Colors.deepPurple,)
-            )
-          ],
+        backgroundColor: Color(0xff394867),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu_sharp,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
+        title:
+            Text("ARena",style: TextStyle(color: Colors.white),),centerTitle: true,
+
+          actions: [Icon(Icons.notifications_active_outlined,color: Colors.white,),
+        IconButton(
+            onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>itemListScreen(email: email)));
+            },
+            icon: Icon(Icons.shopping_cart_outlined,color: Colors.white,)
+        )],
       ),
       // bottomNavigationBar:
       drawer: Drawer(
@@ -76,47 +99,49 @@ class _CategoryScreenState extends State<CategoryScreen> {
           children: [
              UserAccountsDrawerHeader(
                decoration: BoxDecoration(
-                 color: Colors.deepPurple
+                 color: Color(0xff394867)
                ),
               accountName: Text(username),
               accountEmail: Text(email),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Icon(Icons.person),
+                child: Icon(Icons.person,color: Color(0xff394867)),
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(Icons.person,color: Color(0xff394867),),
               title: const Text('Edit Profile'),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => UserProfilePage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfilePage()),
+                );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.shopping_cart),
+              leading: const Icon(Icons.shopping_cart,color: Color(0xff394867)),
               title: const Text('Cart'),
-              onTap: () {},
+              onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>itemListScreen(email: email)));},
             ),
             ListTile(
-              leading: const Icon(Icons.assignment),
-              title: const Text('Orders'),
-              onTap: () {},
+              leading: const Icon(Icons.assignment,color: Color(0xff394867)),
+              title: const Text('Categories'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CategoryPage(username: username,email: email,)));
+              },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
+              leading: const Icon(Icons.settings,color: Color(0xff394867)),
               title: const Text('Settings'),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SettingsPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage(useraname: username,email: email,)),
+                );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.logout),
+              leading: const Icon(Icons.logout,color: Color(0xff394867)),
               title: const Text('Logout'),
               onTap: () {
                 signOutGoogle();
@@ -140,7 +165,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     color: Colors.white70,
-                    border: Border.all(color: Colors.white60),
+                    border: Border.all(color: Colors.blueGrey),
                   ),
                   child: const TextField(
                     decoration: InputDecoration(
@@ -148,7 +173,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       border: InputBorder.none,
                       icon: Padding(
                         padding: EdgeInsets.only(left: 8.0),
-                        child: Icon(Icons.search),
+                        child: Icon(Icons.search,color: Color(0xff394867),),
                       ),
                     ),
                   ),
@@ -173,7 +198,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               height: 80,
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'dress',)));
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'women',)));
                                 },
                                 child: CircleAvatar(
                                   backgroundColor: Colors.grey[200],
@@ -199,7 +224,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               height: 80,
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'dress',)));
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'men',)));
                                 },
                                 child: CircleAvatar(
                                   backgroundColor: Colors.grey[200],
@@ -225,7 +250,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               height: 80,
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'chairs',)));
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context)=>
+                                          CatalogScreen(username: username, email: email, cat:'chairs',)
+                                      )
+                                  );
                                 },
                                 child: CircleAvatar(
                                   backgroundColor: Colors.grey[200],
@@ -264,9 +294,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       child: Column(
                         children: [
                           Container(
+
                               decoration: BoxDecoration(
+
                                 // color: Colors.white10,
-                                  borderRadius: BorderRadius.circular(40)
+                                  borderRadius: BorderRadius.circular(40),
+
                               ),
                             margin: EdgeInsets.all(8),
                               width: 80,
@@ -311,118 +344,154 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ],
                 ),
               ),
-              // SizedBox(height: 100,),
+              SizedBox(height: 15,),
               SizedBox(
-                height: 150,
-                child: PageView(
-                  scrollDirection: Axis.horizontal,
-                  controller: bannerController, // Add this line
-                  children: [
-                    Container(
-                      width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.blue,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Banner 1',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                height: 200.0,
+                child: PageView.builder(
+                  controller: bannerController,
+                  itemCount: images.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.asset(
+                          images[index],
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                    Container(
-                      width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.green,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Banner 2',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.red,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Banner 3',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
+                  onPageChanged: (int index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+              // SizedBox(
+              //   height: 150,
+              //   child: PageView(
+              //     scrollDirection: Axis.horizontal,
+              //     controller: bannerController, // Add this line
+              //     children: [
+              //       Container(
+              //         width: 200,
+              //         margin: const EdgeInsets.symmetric(horizontal: 8),
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(16),
+              //           // color: Colors.blue,
+              //         ),
+              //         child: Center(
+              //           child: Image.asset(
+              //             "assets/images/banner3.jfif",fit: BoxFit.cover,
+              //           )
+              //         ),
+              //       ),
+              //       Container(
+              //         width: 200,
+              //         margin: const EdgeInsets.symmetric(horizontal: 8),
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(16),
+              //           // color: Colors.green,
+              //         ),
+              //         child: Center(
+              //           child: Image.asset(
+              //             "assets/images/banner1.jfif",fit: BoxFit.cover,
+              //           )
+              //         ),
+              //       ),
+              //       Container(
+              //         width: 200,
+              //         margin: const EdgeInsets.symmetric(horizontal: 8),
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(16),
+              //           // color: Colors.red,
+              //         ),
+              //         child:  Center(
+              //           child: Image.asset("assets/images/banner2.jfif",fit: BoxFit.cover,)
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15,top: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Furniture",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-                    SizedBox(width: 120,),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'furniture',)));
-                        },
-                        child: Text("See all",style: TextStyle(color: Colors.black),)),
-                    Icon(Icons.navigate_next)
+                    Text("Recently Added",
+                        style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Row(
+                      children: [
+                        TextButton(
+                          child: Text("All",style: TextStyle(color: Colors.grey)),
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context)=>CatalogScreen(username: username, email: email, cat: "chairs")));
+                          },
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.grey,
+                          size: 16,
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 200,
+
                 child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("users").doc(widget.email).collection("products").doc("categories").collection("furniture").limit(8).snapshots(),
+                    stream: FirebaseFirestore.instance.collection("users").doc(email).collection("products").doc("categories").collection("furniture").limit(8).snapshots(),
                     builder: (context,snapshot){
                       if(!snapshot.hasData){
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       }
                       return ListView.builder(
                         itemCount: snapshot.data!.size,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return DisplayItems(product: snapshot.data!.docs[index],);
+                          return DisplayItems(product: snapshot.data!.docs[index],email: email,);
                         },
                       );
                     }
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15,top: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Electronics",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-                    SizedBox(width: 100,),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat:'electronics',)));
-                        },
-                    child: Text("See all",style: TextStyle(color: Colors.black),)),
-                    Icon(Icons.navigate_next)
+                    Text("Popular Products",
+                        style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Row(
+                      children: [
+                        TextButton(
+                          child: Text("All",style: TextStyle(color: Colors.grey)),
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context)=>CatalogScreen(username: username, email: email, cat: "chairs")));
+                          },
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.grey,
+                          size: 16,
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -433,13 +502,61 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     stream: FirebaseFirestore.instance.collection("users").doc(widget.email).collection("products").doc("categories").collection("electronics").limit(8).snapshots(),
                     builder: (context,snapshot){
                       if(!snapshot.hasData){
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       }
                       return ListView.builder(
                         itemCount: snapshot.data!.size,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return DisplayItems(product: snapshot.data!.docs[index],);
+                          return DisplayItems(product: snapshot.data!.docs[index],email: email,);
+                        },
+                      );
+                    }
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15,top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Recommended for you",
+                        style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Row(
+                      children: [
+                        TextButton(
+                          child: Text("All",style: TextStyle(color: Colors.grey)),
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CatalogScreen(username: username, email: email, cat: "men")));
+                          },
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.grey,
+                          size: 16,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection("users").doc(widget.email).collection("products").doc("categories").collection("men").limit(8).snapshots(),
+                    builder: (context,snapshot){
+                      if(!snapshot.hasData){
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return ListView.builder(
+                        itemCount: snapshot.data!.size,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return DisplayItems(product: snapshot.data!.docs[index],email: email,);
                         },
                       );
                     }
@@ -455,23 +572,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 class DisplayItems extends StatelessWidget {
   final DocumentSnapshot product;
-  DisplayItems({required this.product});
+  final String email;
+  DisplayItems({required this.product,required this.email});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(product["pic"],width: 100,height: 100,
-          ),
-          Center(child: Text(product["name"],style: TextStyle(fontSize: 12),)),
-        ],
+    return InkWell(
+      onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context)=>ProductScreen(product: product,emailid: email,))
+        );
+      },
+      child: Container(
+        width: 120,
+        height: 120,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  blurRadius: 5.0,
+                  offset: Offset(0,3),
+                  spreadRadius: 0
+              )
+            ]
+        ),
+        child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(product["pic"],width: 100,height: 100,
+            ),
+            Center(child: Text(product["name"],style: TextStyle(fontSize: 12),)),
+            Center(child: Text("Price:${product["price"].toString()}/-",style: TextStyle(fontSize: 12,color: Colors.grey),)),
+
+          ],
+        ),
       ),
     );
   }

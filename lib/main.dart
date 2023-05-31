@@ -3,6 +3,7 @@ import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/arView.dart';
+import 'package:furniture/bottomnav.dart';
 import 'package:furniture/categories.dart';
 import 'package:furniture/product.dart';
 import 'package:furniture/splash.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  isLogged?CategoryScreen(useraname: username, email: email):AnimatedSplashScreen(
+      home:  isLogged?MainScreen(username: username, email: email):AnimatedSplashScreen(
           splash: Image.asset(
             'assets/images/logo.png',
             width: 200,

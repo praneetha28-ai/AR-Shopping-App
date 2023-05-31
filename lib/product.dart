@@ -185,71 +185,44 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
 
     return Scaffold(
-      backgroundColor: Color(0xffDDF7E3),
+      backgroundColor: Color(0xff9BA4B5),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xffDF2E38),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // IconButton(onPressed: (){
-            //   signOutGoogle();
-            //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Login()));
-            // }, icon: Icon(Icons.logout)),
-            Text("Hello ${widget.username}"),
-            InkWell(
-              onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>itemListScreen(email: widget.email,)));},
-              child: badges.Badge(
-                  badgeStyle: badges.BadgeStyle(
-                    shape: badges.BadgeShape.circle,
-                    badgeColor: Colors.red,
-                    padding: EdgeInsets.all(5),
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
-
-                  ),
-                badgeAnimation:const badges.BadgeAnimation.scale(
-                  toAnimate: true,
-                  // loopAnimation: true,
-                  animationDuration: Duration(seconds: 5)
-                ),
-                badgeContent: Text(
-                 cartItems.toString()
-                ),
-                child: Icon(Icons.shopping_cart,size: 25,),
-              )
-            )
-          ],
-        ),
+        backgroundColor: Color(0xff394867),leading: IconButton(icon: Icon(Icons.arrow_back_ios_new),onPressed: (){Navigator.of(context).pop(context);},),
+        title: Text(cat.toUpperCase()),centerTitle: true,
+        actions: [IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>itemListScreen(email: widget.email,)));}, icon: Icon(Icons.shopping_cart_outlined,size: 25,),)],
       ),
-      body:StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("users").doc(widget.email).collection("products").doc("categories").collection(cat).snapshots(),
-        builder: (context,snapshot){
-          if(!snapshot.hasData){
-            return CircularProgressIndicator();
-          }
-          return GridView(
-            gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            primary: false,
-            shrinkWrap: true,
-            children: List<Widget>.generate(
-              snapshot.data!.size, // same length as the data
-                  (index) => GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context)=>ProductScreen(product: snapshot.data!.docs[index],emailid: widget.email,))
-                      );
-                    },
-                      child: ProductCard(product: snapshot.data!.docs[index])
-                  )
-            ),
-          );
-        },
+      body:Container(
+        margin: EdgeInsets.only(top: 8),
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("users").doc(widget.email).collection("products").doc("categories").collection(cat).snapshots(),
+          builder: (context,snapshot){
+            if(!snapshot.hasData){
+              return CircularProgressIndicator();
+            }
+            return GridView(
+              gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 7,
+                mainAxisSpacing: 7,
+              ),
+              primary: false,
+              shrinkWrap: true,
+              children: List<Widget>.generate(
+                snapshot.data!.size, // same length as the data
+                    (index) => GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context)=>ProductScreen(product: snapshot.data!.docs[index],emailid: widget.email,))
+                        );
+                      },
+                        child: ProductCard(product: snapshot.data!.docs[index])
+                    )
+              ),
+            );
+          },
+        ),
       )
       // GridView.count(
       //   crossAxisCount: 2,
@@ -284,9 +257,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8),
-      color: Color(0xffFFF4E0),
-      elevation: 10,
+      margin: EdgeInsets.all(1),
+      color: Color(0xffF1F6F9),
+      elevation: 6,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

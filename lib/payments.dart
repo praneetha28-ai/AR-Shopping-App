@@ -13,13 +13,10 @@ class _paymentState extends State<payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 166, 211, 167),
-      appBar: AppBar(
-
-        title: Text('Select Payment Option'),
-        elevation: 0,
-        backgroundColor: Colors.red,
-      ),
+      backgroundColor: Color(0xffF1F6F9),appBar: AppBar(title: Text('Select Payment Method'),centerTitle: true,backgroundColor: Color(0xff394867),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed:(){Navigator.of(context).pop(context);}),),
       body: Column(
         children: [
           SizedBox(
