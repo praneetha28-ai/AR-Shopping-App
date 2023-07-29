@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furniture/profile.dart';
+import 'package:furniture/ProfileScreen/profile.dart';
 // import 'package:myshop/pages/profile_page.dart';
 
 class SettingsPage extends StatefulWidget {

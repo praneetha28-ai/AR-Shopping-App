@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture/itemList.dart';
-import 'package:furniture/loginPage.dart';
+import 'package:furniture/ProductScreen/itemList.dart';
+import 'package:furniture/LoginScreen/loginPage.dart';
 import 'package:furniture/models/itemModel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:badges/badges.dart' as badges;
 import 'detail.dart';
-import 'models/userModel.dart';
+import '../models/userModel.dart';
 
 class CatalogScreen extends StatefulWidget {
    String username;

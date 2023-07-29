@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:furniture/product.dart';
+import 'package:furniture/ProductScreen/product.dart';
 
 class CategoryPage extends StatelessWidget {
 

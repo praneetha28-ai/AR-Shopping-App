@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture/arView.dart';
-import 'package:furniture/itemList.dart';
-import 'models/itemModel.dart';
+import 'package:furniture/ARFunctionality/arView.dart';
+import 'package:furniture/ProductScreen/itemList.dart';
+import '../models/itemModel.dart';
 
 class ProductScreen extends StatelessWidget {
   // final ItemModel product;

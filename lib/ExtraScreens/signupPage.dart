@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:furniture/loginPage.dart';
-import 'package:furniture/product.dart';
+import 'package:furniture/LoginScreen/loginPage.dart';
+import 'package:furniture/ProductScreen/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'models/userModel.dart';
+import '../models/userModel.dart';
 
 class Signup extends StatefulWidget{
   const Signup({Key? key}): super(key:key);

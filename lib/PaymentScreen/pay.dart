@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furniture/success.dart';
-import 'package:furniture/thanku_page.dart';
+import 'package:furniture/ExtraScreens/success.dart';
+import 'package:furniture/PaymentScreen/thanku_page.dart';
 
 class Payment extends StatelessWidget {
   const Payment({Key? key}) : super(key: key);

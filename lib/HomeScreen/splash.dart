@@ -2,11 +2,11 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:furniture/bottomnav.dart';
+import 'package:furniture/HomeScreen/bottomnav.dart';
 
-import 'package:furniture/loginPage.dart';
-import 'package:furniture/product.dart';
-import 'package:furniture/signupPage.dart';
+import 'package:furniture/LoginScreen/loginPage.dart';
+import 'package:furniture/ProductScreen/product.dart';
+import 'package:furniture/ExtraScreens/signupPage.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:flutter/src/material/icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,7 +68,6 @@ class _MyliquidSwipeState extends State<MyliquidSwipe> {
               mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>
                 [
-
                   Container(
                     // color: Colors.blue,
                       height: MediaQuery.of(context).size.height/2,
@@ -126,7 +125,8 @@ class _MyliquidSwipeState extends State<MyliquidSwipe> {
            floatingActionButton: FloatingActionButton(
              backgroundColor: Colors.blue[100],
              onPressed: (){
-               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>isLogged?MainScreen(username:name, email: email):Login()));
+               Navigator.of(context).pushReplacement(
+                   MaterialPageRoute(builder: (context)=>isLogged?MainScreen(username:name, email: email):Login()));
              },
              child: Icon(Icons.skip_next,color: Colors.black,),
            ),

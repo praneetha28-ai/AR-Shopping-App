@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:furniture/categories.dart';
-import 'package:furniture/categoryPage.dart';
-import 'package:furniture/notifications.dart';
-import 'package:furniture/whishlist.dart';
+import 'package:furniture/HomeScreen/categories.dart';
+import 'package:furniture/CatalogScreen/categoryPage.dart';
+import 'package:furniture/ExtraScreens/notifications.dart';
+import 'package:furniture/ExtraScreens/whishlist.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:myshop/pages/category.dart';

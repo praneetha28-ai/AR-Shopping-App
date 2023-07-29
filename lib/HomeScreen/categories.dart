@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture/categoryPage.dart';
-import 'package:furniture/itemList.dart';
-import 'package:furniture/product.dart';
-import 'package:furniture/profile.dart';
-import 'package:furniture/settings.dart';
+import 'package:furniture/CatalogScreen/categoryPage.dart';
+import 'package:furniture/ProductScreen/itemList.dart';
+import 'package:furniture/ProductScreen/product.dart';
+import 'package:furniture/ProfileScreen/profile.dart';
+import 'package:furniture/ProfileScreen/settings.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'detail.dart';
-import 'loginPage.dart';
+import '../ProductScreen/detail.dart';
+import '../LoginScreen/loginPage.dart';
 class CategoryScreen extends StatefulWidget {
 
   String useraname;

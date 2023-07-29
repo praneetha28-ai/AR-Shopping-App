@@ -3,15 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:furniture/product.dart';
+import 'package:furniture/ProductScreen/product.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'SignupPage.dart';
-import 'bottomnav.dart';
-import 'categories.dart';
-import 'categoryPage.dart';
-import 'models/itemModel.dart';
+import '../SignupPage.dart';
+import '../HomeScreen/bottomnav.dart';
+import '../HomeScreen/categories.dart';
+import '../CatalogScreen/categoryPage.dart';
+import '../models/itemModel.dart';
 
 
 class Login extends StatefulWidget{
